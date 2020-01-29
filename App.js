@@ -4,6 +4,10 @@ import { Alert, StyleSheet, View, TouchableWithoutFeedback, Keyboard } from 'rea
 import Header from './components/Header';
 import ListItem from './components/listItem';
 import AddTodo from './components/AddTodo';
+// import Sanbox from './components/sanbox';
+
+import Navigation from './routes/homeStack';
+
 
 export default class extends Component {
   state = {
@@ -29,7 +33,7 @@ export default class extends Component {
     const handleAddTodo = () => {
       const { todos } = this.state;
       let currentId = todos.length ? todos[todos.length - 1].id : 1;
-      const newId = currentId ? currentId += 1 : 0;
+      const newId = currentId ? Math.floor(Math.random() * 1000) : 0;
       if (textTodo.length < 3) {
         Alert.alert('Opp !', 'Text must be length more than 3 charaters', [{ text: 'Dissmiss!' }])
       } else {
@@ -38,15 +42,15 @@ export default class extends Component {
     }
 
     return (
+      // <Sanbox />
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.container}>
+          <Navigation />
           {/* Header */}
           <Header />
-          <AddTodo value={textTodo} changeTodo={handleChangeTodo} addTodo={handleAddTodo} />
           <View style={styles.content}>
-            <View style={styles.list}>
-              <ListItem titile="hello" data={todos} handlePress={(keyPress)} />
-            </View>
+            <AddTodo value={textTodo} changeTodo={handleChangeTodo} addTodo={handleAddTodo} />
+            <ListItem data={todos} handlePress={(keyPress)} />
           </View>
         </View>
       </TouchableWithoutFeedback>
